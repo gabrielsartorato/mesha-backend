@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Service } from './Service';
+import { ServiceOrder } from './ServiceOrders';
 import { User } from './User';
 
 @Entity('attendances')
@@ -16,9 +16,15 @@ class Attendance {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => ServiceOrder, (service) => service.attendance, {
+    cascade: true,
+    eager: true,
+  })
+  services: ServiceOrder[];
 
   @Column()
   total_price: number;
@@ -28,9 +34,6 @@ class Attendance {
 
   @Column()
   end_service: Date;
-
-  @OneToMany(() => Service, (service) => service.attendance)
-  attendances_orders: Service[];
 
   @CreateDateColumn()
   created_at: Date;

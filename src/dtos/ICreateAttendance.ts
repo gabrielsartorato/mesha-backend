@@ -1,5 +1,7 @@
+import { User } from '@models/User';
+
 export interface ICreateAttendanceDTO {
-  user_id: string;
+  user: User;
   total_price: number;
   services: IServices[];
 }

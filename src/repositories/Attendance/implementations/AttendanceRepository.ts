@@ -10,12 +10,8 @@ class AttendanceRepository implements IAttendanceRepository {
     this.ormRepository = getRepository(Attendance);
   }
 
-  public async create({ user_id }: ICreateAttendanceDTO): Promise<Attendance> {
-    const attendance = this.ormRepository.create({
-      user: {
-        id: user_id,
-      },
-    });
+  public async create(data: ICreateAttendanceDTO): Promise<Attendance> {
+    const attendance = this.ormRepository.create(data);
 
     return this.ormRepository.save(attendance);
   }
