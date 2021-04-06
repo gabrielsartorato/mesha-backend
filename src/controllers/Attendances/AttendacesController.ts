@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 
 class AttendancesController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { user_id }: ICreateAttendanceDTO = request.user;
+    const { user_id } = request.user;
 
     const attendanceRepository = new AttendanceRepository();
     const userRepository = new UserRepository();

@@ -4,9 +4,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Service } from './Service';
 import { User } from './User';
 
 @Entity('attendances')
@@ -26,6 +28,9 @@ class Attendance {
 
   @Column()
   end_service: Date;
+
+  @OneToMany(() => Service, (service) => service.attendance)
+  attendances_orders: Service[];
 
   @CreateDateColumn()
   created_at: Date;

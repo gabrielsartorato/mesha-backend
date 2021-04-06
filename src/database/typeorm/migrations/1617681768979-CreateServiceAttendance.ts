@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateTableServices1617676070915 implements MigrationInterface {
+export class CreateServiceAttendance1617681768979
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'services',
+        name: 'services_order',
         columns: [
           {
             name: 'id',
@@ -14,17 +15,11 @@ export class CreateTableServices1617676070915 implements MigrationInterface {
             isGenerated: true,
           },
           {
-            name: 'name_service',
-            type: 'varchar',
+            name: 'id_service',
+            type: 'integer',
           },
           {
-            name: 'price',
-            type: 'decimal',
-            scale: 2,
-            precision: 10,
-          },
-          {
-            name: 'minutes',
+            name: 'id_attendance',
             type: 'integer',
           },
           {
@@ -43,6 +38,6 @@ export class CreateTableServices1617676070915 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('services');
+    await queryRunner.dropTable('services_order');
   }
 }
