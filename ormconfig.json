@@ -1,0 +1,17 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "mesha",
+  "password": "mesha",
+  "database": "mesha",
+  "entities": [
+    "./src/models/*.ts"
+  ],
+  "migrations": [
+    "./src/database/typeorm/migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "./src/database/typeorm/migrations"
+  }
+}
