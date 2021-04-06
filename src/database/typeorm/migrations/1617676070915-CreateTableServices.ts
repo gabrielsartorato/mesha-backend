@@ -11,6 +11,7 @@ export class CreateTableServices1617676070915 implements MigrationInterface {
             type: 'integer',
             isPrimary: true,
             generationStrategy: 'increment',
+            isGenerated: true,
           },
           {
             name: 'price',

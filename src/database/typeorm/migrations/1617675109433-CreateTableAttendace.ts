@@ -11,6 +11,7 @@ export class CreateTableAttendace1617675109433 implements MigrationInterface {
             type: 'integer',
             isPrimary: true,
             generationStrategy: 'increment',
+            isGenerated: true,
           },
           {
             name: 'user_id',
@@ -26,10 +27,12 @@ export class CreateTableAttendace1617675109433 implements MigrationInterface {
           {
             name: 'start_service',
             type: 'timestamp',
+            isNullable: true,
           },
           {
             name: 'end_service',
             type: 'timestamp',
+            isNullable: true,
           },
           {
             name: 'created_at',
