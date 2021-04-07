@@ -39,6 +39,9 @@ class Attendance {
   @Column()
   end_service: Date;
 
+  @Column()
+  commission: number;
+
   @CreateDateColumn()
   created_at: Date;
 

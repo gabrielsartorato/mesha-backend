@@ -1,3 +1,5 @@
+import { addMinutes, isAfter } from 'date-fns';
+
 import AppError from '@errors/AppError';
 import { Attendance } from '@models/Attedance';
 import { IAttendanceRepository } from '@repositories/Attendance/IAttendanceRepositories';
@@ -9,7 +11,7 @@ interface IRequest {
   attendance_id: string;
 }
 
-class UpdateAttendanceStartTimeService {
+class UpdateAttendanceEndTimeService {
   private readonly attendanceRepository: IAttendanceRepository;
 
   private readonly userRepository: IUserRepository;
@@ -37,16 +39,50 @@ class UpdateAttendanceStartTimeService {
       throw new AppError('Atendimento não encontrado');
     }
 
-    if (attendance.start_service !== null) {
-      throw new AppError('Atendimento já iniciado');
+    const { services, start_service, end_service } = attendance;
+
+    if (start_service === null) {
+      throw new AppError('Atendimento não iniciado');
     }
+
+    if (end_service !== null) {
+      throw new AppError('Atendimento já finalizado');
+    }
+
+    const time = services.reduce((acc, array) => {
+      const { service_id } = array;
+      const service: any = service_id;
+      const { minutes } = service;
+
+      const soma = acc + minutes;
+
+      return soma;
+    }, 0);
+
+    const expectedEndTime = addMinutes(start_service, time);
+
+    const price = services.reduce((acc, array) => {
+      const { service_id } = array;
+      const service: any = service_id;
+      const { price } = service;
+
+      const soma = acc + Number(price);
+
+      return soma;
+    }, 0);
 
     Object.assign(
       attendance,
-      { start_service: new Date() },
+      { end_service: new Date() },
       { user: userResponse(attendance.user) },
       { professional: userResponse(attendance.professional) },
+      { total_price: price },
+      { commission: (price / 100) * 10 },
     );
+
+    if (isAfter(attendance.end_service, expectedEndTime)) {
+      throw new AppError('Horário final ultrapassou limite pré estabelecido');
+    }
 
     await this.attendanceRepository.save(attendance);
 
@@ -54,4 +90,4 @@ class UpdateAttendanceStartTimeService {
   }
 }
 
-export { UpdateAttendanceStartTimeService };
+export { UpdateAttendanceEndTimeService };
