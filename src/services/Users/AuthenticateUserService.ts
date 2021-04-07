@@ -29,6 +29,8 @@ export class AuthenticateUserService {
   public async execute({ user_name, password }: IRequest): Promise<IResponse> {
     const user = await this.userRepository.findUserByName(user_name);
 
+    console.log(user);
+
     if (!user) {
       throw new AppError('Invalid user name');
     }
