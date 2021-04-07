@@ -21,3 +21,5 @@ serivceRouter.post(
   ensureAuthenticate,
   serviceController.create,
 );
+
+serivceRouter.get('/', ensureAuthenticate, serviceController.index);

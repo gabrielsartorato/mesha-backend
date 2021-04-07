@@ -4,6 +4,14 @@ import { CreateService } from '@services/Services/CreateService';
 import { Request, Response } from 'express';
 
 class ServiceController {
+  public async index(request: Request, response: Response): Promise<Response> {
+    const serviceRepository = new ServiceRepository();
+
+    const services = await serviceRepository.findall();
+
+    return response.json(services);
+  }
+
   public async create(request: Request, response: Response): Promise<Response> {
     const { name_service, minutes, price }: ICreateServiceDTO = request.body;
 
