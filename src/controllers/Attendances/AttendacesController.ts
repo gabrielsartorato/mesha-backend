@@ -15,14 +15,14 @@ class AttendancesController {
       userRepository,
     );
 
-    const attendace = await createAttendanceService.execute({
+    const attendance = await createAttendanceService.execute({
       user_id,
       services,
       total_price,
       professional_id,
     });
 
-    return response.json(attendace);
+    return response.json(attendance);
   }
 }
 

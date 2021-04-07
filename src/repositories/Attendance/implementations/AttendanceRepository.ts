@@ -15,6 +15,16 @@ class AttendanceRepository implements IAttendanceRepository {
 
     return this.ormRepository.save(attendance);
   }
+
+  public async findById(id: string): Promise<Attendance | undefined> {
+    const attendace = await this.ormRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return attendace;
+  }
 }
 
 export { AttendanceRepository };
