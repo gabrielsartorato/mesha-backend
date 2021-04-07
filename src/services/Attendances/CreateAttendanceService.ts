@@ -56,10 +56,11 @@ class CreateAttendanceService {
       professional,
     });
 
-    Object.assign(attendance, { user: userResponse(attendance.user) });
-    Object.assign(attendance, {
-      professional: userResponse(attendance.professional),
-    });
+    Object.assign(
+      attendance,
+      { user: userResponse(attendance.user) },
+      { professional: userResponse(attendance.professional) },
+    );
 
     return attendance;
   }

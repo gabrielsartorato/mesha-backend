@@ -25,6 +25,10 @@ class AttendanceRepository implements IAttendanceRepository {
 
     return attendace;
   }
+
+  public async save(attendance: Attendance): Promise<Attendance> {
+    return this.ormRepository.save(attendance);
+  }
 }
 
 export { AttendanceRepository };

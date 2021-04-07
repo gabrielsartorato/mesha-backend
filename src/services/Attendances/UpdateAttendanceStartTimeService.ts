@@ -3,6 +3,7 @@ import AppError from '@errors/AppError';
 import { Attendance } from '@models/Attedance';
 import { IAttendanceRepository } from '@repositories/Attendance/IAttendanceRepositories';
 import { IUserRepository } from '@repositories/Users/IUserRepositories';
+import { userResponse } from '@views/Users/UserResponse';
 
 interface IRequest {
   attendant_id: string;
@@ -37,7 +38,18 @@ class UpdateAttendanceStartTimeService {
       throw new AppError('Atendimento não encontrado');
     }
 
-    Object.assign(attendance, { start_service: new Date() });
+    if (attendance.start_service !== null) {
+      throw new AppError('Atendimento já iniciado');
+    }
+
+    Object.assign(
+      attendance,
+      { start_service: new Date() },
+      { user: userResponse(attendance.user) },
+      { professional: userResponse(attendance.professional) },
+    );
+
+    await this.attendanceRepository.save(attendance);
 
     return attendance;
   }
