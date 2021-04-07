@@ -13,6 +13,7 @@ interface IRequest {
   user_id: string;
   services: IServices[];
   total_price: number;
+  professional_id: string;
 }
 class CreateAttendanceService {
   private readonly attendanceRepository: IAttendanceRepository;
@@ -31,11 +32,17 @@ class CreateAttendanceService {
     user_id,
     services,
     total_price,
+    professional_id,
   }: IRequest): Promise<Attendance> {
     const user = await this.userRepository.findById(user_id);
+    const professional = await this.userRepository.findById(professional_id);
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
+    }
+
+    if (!professional || professional.type !== 'PROFISSIONAL') {
+      throw new AppError('Professional não encontrado');
     }
 
     if (services.length === 0) {
@@ -46,9 +53,13 @@ class CreateAttendanceService {
       user,
       services,
       total_price,
+      professional,
     });
 
     Object.assign(attendance, { user: userResponse(attendance.user) });
+    Object.assign(attendance, {
+      professional: userResponse(attendance.professional),
+    });
 
     return attendance;
   }

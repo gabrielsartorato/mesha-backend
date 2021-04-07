@@ -20,6 +20,10 @@ class Attendance {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'professional_id' })
+  professional: User;
+
   @OneToMany(() => ServiceOrder, (service) => service.attendance, {
     cascade: true,
     eager: true,

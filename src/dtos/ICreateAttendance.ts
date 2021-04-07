@@ -4,6 +4,7 @@ export interface ICreateAttendanceDTO {
   user: User;
   total_price: number;
   services: IServices[];
+  professional: User;
 }
 
 interface IServices {

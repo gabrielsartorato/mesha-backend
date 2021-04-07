@@ -8,7 +8,7 @@ import { userResponse } from '@views/Users/UserResponse';
 
 class UserController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { user_name, password } = request.body;
+    const { user_name, password, type } = request.body;
 
     const hashProvider = new BCryptProvider();
     const userRepository = new UserRepository();
@@ -17,7 +17,7 @@ class UserController {
       hashProvider,
     );
 
-    const user = await createUserService.execute({ user_name, password });
+    const user = await createUserService.execute({ user_name, password, type });
 
     return response.json(userResponse(user));
   }

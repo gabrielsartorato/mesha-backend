@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 
 class AttendancesController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { services, total_price } = request.body;
+    const { services, total_price, professional_id } = request.body;
     const { user_id } = request.user;
 
     const attendanceRepository = new AttendanceRepository();
@@ -19,6 +19,7 @@ class AttendancesController {
       user_id,
       services,
       total_price,
+      professional_id,
     });
 
     return response.json(attendace);
