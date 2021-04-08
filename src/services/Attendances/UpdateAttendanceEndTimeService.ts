@@ -73,8 +73,6 @@ class UpdateAttendanceEndTimeService {
 
     const duration = differenceInMinutes(new Date(), attendance.start_service);
 
-    console.log(duration);
-
     Object.assign(
       attendance,
       { end_service: new Date() },
