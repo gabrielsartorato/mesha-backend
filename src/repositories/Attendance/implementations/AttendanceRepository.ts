@@ -29,6 +29,12 @@ class AttendanceRepository implements IAttendanceRepository {
   public async save(attendance: Attendance): Promise<Attendance> {
     return this.ormRepository.save(attendance);
   }
+
+  public async findAll(): Promise<Attendance[]> {
+    const attendaces = await this.ormRepository.find();
+
+    return attendaces;
+  }
 }
 
 export { AttendanceRepository };

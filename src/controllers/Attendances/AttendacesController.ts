@@ -4,6 +4,14 @@ import { CreateAttendanceService } from '@services/Attendances/CreateAttendanceS
 import { Request, Response } from 'express';
 
 class AttendancesController {
+  public async index(request: Request, response: Response): Promise<Response> {
+    const attendanceRepository = new AttendanceRepository();
+
+    const attendances = await attendanceRepository.findAll();
+
+    return response.json(attendances);
+  }
+
   public async create(request: Request, response: Response): Promise<Response> {
     const { services, total_price, professional_id } = request.body;
     const { user_id } = request.user;

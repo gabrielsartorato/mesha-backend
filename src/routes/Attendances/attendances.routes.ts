@@ -25,6 +25,8 @@ attendaceRouter.put(
   attendanceStartTimeController.update,
 );
 
+attendaceRouter.get('/', ensureAuthenticate, attendanceController.index);
+
 attendaceRouter.put(
   '/endtime/:attendance_id',
   celebrate({
