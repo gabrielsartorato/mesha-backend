@@ -27,7 +27,8 @@ export class AuthenticateUserService {
   }
 
   public async execute({ user_name, password }: IRequest): Promise<IResponse> {
-    const user = await this.userRepository.findUserByName(user_name);
+    const userNameLowerCase = user_name.toLowerCase();
+    const user = await this.userRepository.findUserByName(userNameLowerCase);
 
     console.log(user);
 

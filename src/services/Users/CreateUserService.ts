@@ -21,8 +21,9 @@ export class CreateUserservice {
   }
 
   public async execute({ user_name, password, type }: IRequest): Promise<User> {
+    const userLower = user_name.toLowerCase();
     const checkExistingUser = await this.userRepository.findUserByName(
-      user_name,
+      userLower,
     );
 
     const peoplesTypes = ['ATENDENTE', 'NORMAL', 'PROFISSIONAL'];
@@ -38,7 +39,7 @@ export class CreateUserservice {
     const hashPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.userRepository.create({
-      user_name,
+      user_name: userLower,
       password: hashPassword,
       type,
     });
