@@ -1,4 +1,4 @@
-import { addMinutes, isAfter } from 'date-fns';
+import { addMinutes, isAfter, differenceInMinutes } from 'date-fns';
 
 import AppError from '@errors/AppError';
 import { Attendance } from '@models/Attedance';
@@ -71,6 +71,10 @@ class UpdateAttendanceEndTimeService {
       return soma;
     }, 0);
 
+    const duration = differenceInMinutes(new Date(), attendance.start_service);
+
+    console.log(duration);
+
     Object.assign(
       attendance,
       { end_service: new Date() },
@@ -78,6 +82,7 @@ class UpdateAttendanceEndTimeService {
       { professional: userResponse(attendance.professional) },
       { total_price: price },
       { commission: (price / 100) * 10 },
+      { duration },
     );
 
     if (isAfter(attendance.end_service, expectedEndTime)) {

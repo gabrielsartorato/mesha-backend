@@ -31,7 +31,11 @@ class AttendanceRepository implements IAttendanceRepository {
   }
 
   public async findAll(): Promise<Attendance[]> {
-    const attendaces = await this.ormRepository.find();
+    const attendaces = await this.ormRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
 
     return attendaces;
   }
